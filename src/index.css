@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+:root {
+   --bg: #0D0D0D;
+   --surface: #1A1A1A;
+   --surface-2: #232220;
+   --surface-3: #2A2826;
+   --line: rgba(245, 240, 232, 0.08);
+   --line-strong: rgba(245, 240, 232, 0.16);
+   --text: #F5F0E8;
+   --text-muted: rgba(245, 240, 232, 0.62);
+   --text-faint: rgba(245, 240, 232, 0.40);
+   --gold: #C9A84C;
+   --gold-deep: #A8862F;
+   --gold-soft: rgba(201, 168, 76, 0.14);
+   --gold-contrast: #1a1408;
+   --amber: #E0B450;
+   --blue: #6AA0D9;
+   --green: #6FB18A;
+
+   --serif: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+   --sans: "DM Sans", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+   --mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+   --r-sm: 4px;
+   --r-md: 8px;
+   --r-lg: 14px;
+
+   --header-h: 76px;
+
+   /* density tokens (overridden by tweaks) */
+   --grid-row-gap: 32px;
+   --grid-col-gap: 24px;
+   --card-gap: 18px;
+   --title-scale: 1;
+}
+
+.serif {
+   font-family: var(--serif);
+}
+
+.sans {
+   font-family: var(--sans);
+}
