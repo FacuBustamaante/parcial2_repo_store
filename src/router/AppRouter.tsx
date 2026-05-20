@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Orders from "../features/products/pages/Orders";
 import ShoppingList from "../features/products/pages/ShoppingList";
-import Header from "../features/products/components/Header";
+import Header from "../shared/Header";
 import '../index.css'
 
 const AppRouter = () => {

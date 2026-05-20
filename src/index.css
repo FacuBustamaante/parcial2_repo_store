@@ -46,3 +46,122 @@
 * {
    box-sizing: border-box;
 }
+
+body {
+   background-color: var(--bg);
+}
+
+/*Animaciones*/
+.card {
+   display: flex;
+   flex-direction: column;
+   border-radius: 4px;
+   overflow: hidden;
+   background: #fff;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+   transform: translateY(-4px);
+   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.flash {
+   animation: flashPulse 0.5s ease;
+}
+
+@keyframes flashPulse {
+   0% {
+      box-shadow: 0 0 0 0 rgba(196, 160, 80, 0.6);
+   }
+
+   50% {
+      box-shadow: 0 0 0 8px rgba(196, 160, 80, 0);
+   }
+
+   100% {
+      box-shadow: 0 0 0 0 rgba(196, 160, 80, 0);
+   }
+}
+
+/* ── Media ── */
+.media {
+   position: relative;
+   height: 300px;
+   overflow: hidden;
+   border-radius: var(--r-md);
+}
+
+.veil {
+   position: absolute;
+   inset: 0;
+   background: linear-gradient(to top, rgba(20, 15, 10, 0.55) 0%, transparent 55%);
+   opacity: 0;
+   transition: opacity 0.3s ease;
+}
+
+.overlay {
+   position: absolute;
+   inset: 0;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   justify-content: flex-end;
+   padding: 16px;
+   opacity: 0;
+   transition: opacity 0.3s ease;
+}
+
+.card:hover .veil,
+.card:hover .overlay {
+   opacity: 1;
+}
+
+.grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+   gap: 24px;
+}
+
+@theme {
+   --animate-fade-in-up: fadeInUp 0.35s ease both;
+   --animate-slide-up: slideUp 0.25s ease;
+}
+
+@keyframes fadeInUp {
+   from {
+      opacity: 0;
+      transform: translateY(16px);
+   }
+
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+
+@keyframes slideUp {
+   from {
+      opacity: 0;
+      transform: translateY(20px);
+   }
+
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+
+.media-detail {
+   border-radius: 12px;
+   overflow: hidden;
+   aspect-ratio: 1;
+}
+
+.grid-detail {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 40px;
+   align-items: start;
+}

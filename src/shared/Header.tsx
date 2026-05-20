@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import '../../../index.css'
+import '../index.css'
 
 export default function Header() {
    const navigate = useNavigate()
@@ -17,12 +17,12 @@ export default function Header() {
             <p className='text-3xl text-white serif'>FoodStore</p>
             <p className='uppercase text-(--text-faint) text-[9px] tracking-[0.32em]'>Tienda Virtual</p>
          </div>
-         <div className='sans rounded-3xl p-1 border border-(--line) absolute left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out'>
+         <div className='sans rounded-3xl p-1 border border-(--line) absolute left-1/2 -translate-x-1/2'>
             {navItems.map(({ label, path }) => (
                <button
                   key={path}
                   onClick={() => navigate(path)}
-                  className={`text-(--text-faint) text-[14px] font-bold px-5 py-2 hover:text-white ${pathname === path ? 'text-zinc-950 bg-amber-50 rounded-3xl ' : ''}`}
+                  className={`text-(--text-faint) text-[14px] duration-100 font-bold px-5 py-2 hover:text-white ${pathname === path ? 'text-zinc-950 bg-amber-50 rounded-3xl ' : ''}`}
                >
                   {label}
                </button>
