@@ -27,8 +27,8 @@
    --r-lg: 14px;
 
    --header-h: 76px;
+   --navbar-height: 120px;
 
-   /* density tokens (overridden by tweaks) */
    --grid-row-gap: 32px;
    --grid-col-gap: 24px;
    --card-gap: 18px;
@@ -41,4 +41,8 @@
 
 .sans {
    font-family: var(--sans);
+}
+
+* {
+   box-sizing: border-box;
 }

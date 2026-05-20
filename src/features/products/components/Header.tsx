@@ -11,24 +11,24 @@ export default function Header() {
    ]
 
    return (
-      <header className='className="fixed bg-(--bg) top-0 w-full h-22 flex justify-between items-center gap-4 px-8"'>
+      <header className='className="fixed bg-(--bg) top-0 w-full h-(--header-h) flex justify-between items-center px-6 gap-4 border-b border-(--line)'>
          <div className='flex items-center gap-2'>
-            <p className='text-5xl italic text-(--gold) serif'>F</p>
-            <p className='text-4xl text-white serif'>FoodStore</p>
-            <p className='text-gray-500 sans'>TIENDA VIRTUAL</p>
+            <p className='text-3xl italic text-(--gold) serif'>F</p>
+            <p className='text-3xl text-white serif'>FoodStore</p>
+            <p className='uppercase text-(--text-faint) text-[9px] tracking-[0.32em]'>Tienda Virtual</p>
          </div>
-         <div className='sans rounded-3xl p-1 border border-gray-800 absolute left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out'>
+         <div className='sans rounded-3xl p-1 border border-(--line) absolute left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out'>
             {navItems.map(({ label, path }) => (
                <button
                   key={path}
                   onClick={() => navigate(path)}
-                  className={`text-gray-500 px-7 py-2 ${pathname === path ? 'text-zinc-950 bg-amber-50 rounded-3xl ' : ''}`}
+                  className={`text-(--text-faint) text-[14px] font-bold px-5 py-2 hover:text-white ${pathname === path ? 'text-zinc-950 bg-amber-50 rounded-3xl ' : ''}`}
                >
                   {label}
                </button>
             ))}
          </div>
-         <button className='text-gray-500 sans py-2 px-6 border rounded-3xl hover:border-amber-200 hover:text-white transition-colors duration-300'>Carrito</button>
+         <button className='text-(--text-faint) sans py-2 px-4 border rounded-3xl border-(--line) hover:border-(--gold) hover:text-white hover:bg-(--gold-soft) transition-colors duration-300'>Carrito</button>
       </header>
    )
 }

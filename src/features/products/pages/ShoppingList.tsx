@@ -2,9 +2,17 @@ import '../../../index.css'
 
 const ShoppingList = () => {
    return (
-      <div className="bg-(--bg) text-white w-full h-full">
-         <h1 className='serif text-white text-5xl'>Comidas listas para una mesa deliberada.</h1>
-         <p>Una selección curada de doce platos preparados en el día. Cocción honesta, ingredientes de productores locales, envío sin cargo a partir de $ 10.000.</p>
+      <div className="bg-(--bg) flex flex-col gap-6 w-full h-[75vh] justify-center px-20">
+         <div className='width-full flex items-end justify-between gap-10 border-b border-(--line) pb-10'>
+            <div className='flex flex-col gap-4 w-125 '>
+               <p className='uppercase text-(--text-faint) text-[9px] tracking-[0.32em]'>Cocina · Menú de la semana</p>
+               <h1 className='serif text-white text-6xl'>Comidas listas para una mesa deliberada.</h1>
+               <p className='text-white sans text-sm'>Una selección curada de doce platos preparados en el día. Cocción honesta, ingredientes de productores locales, envío sin cargo a partir de $ 10.000.</p>
+            </div>
+            <div>
+               <input className='text-white p-1' type="text" placeholder='Buscar producto' name="" id="" />
+            </div>
+         </div>
       </div>
    )
 }
