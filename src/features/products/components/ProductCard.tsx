@@ -6,7 +6,7 @@ import type { ProductCardProps } from "../types";
 export function ProductCard({ product, onAdd, onOpen, addedFlash }: ProductCardProps) {
    return (
       <article className={`card ${addedFlash ? 'flash' : ""}`}>
-         <div className='relative h-80 overflow-hidden rounded-t-lg'>
+         <div className='relative h-80 overflow-hidden '>
             <img
                src={product.imagenes_url[0]}
                alt={product.nombre}
@@ -25,8 +25,8 @@ export function ProductCard({ product, onAdd, onOpen, addedFlash }: ProductCardP
             <span className='absolute top-3 left-3 px-1.5 py-0.5 text-[0.6rem] text-(--text) border border-(--line) font-semibold tracking-[0.06em] uppercase bg-(--bg) rounded-2xl'>{product.categorias[0]?.nombre}</span>
          </div>
 
-         <div className='p-4 flex flex-col gap-3 flex-1 bg-(--bg) text-white border border-(--line)'>
-            <div className='flex justify-between items-start gap-2'>
+         <div className='p-4 flex flex-col gap-3 flex-1 bg-(--bg) text-white  border-(--line)'>
+            <div className='min-h-12 flex items-start justify-between gap-2'>
                <h3 className='serif'>{product.nombre}</h3>
                <p className='serif font-bold text-(--gold)'>{formatARS(product.precio_base)}</p>
             </div>

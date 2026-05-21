@@ -4,7 +4,7 @@ import { ProductsSection } from '../components/ProductsSection'
 const ShoppingList = () => {
    return (
       <>
-         <div className="bg-(--bg) flex flex-col gap-6 w-full h-[75vh] justify-center px-20">
+         <div className="bg-(--bg) flex flex-col gap-6 w-full h-[60vh] justify-center px-20">
             <div className='width-full flex items-end justify-between gap-10 border-b border-(--line) pb-10'>
                <div className='flex flex-col gap-4 w-125 '>
                   <p className='uppercase text-(--text-faint) text-[9px] tracking-[0.32em]'>Cocina · Menú de la semana</p>
