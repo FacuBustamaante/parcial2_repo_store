@@ -1,9 +1,12 @@
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useCartStore } from '../features/cart/store/cartStore'
 import '../index.css'
 
 export default function Header() {
    const navigate = useNavigate()
    const { pathname } = useLocation()
+   const itemCount = useCartStore((s) => s.items.reduce((acc, i) => acc + i.qty, 0))
+   const openCart = useCartStore((s) => s.openCart)
 
    const navItems = [
       { label: 'Productos', path: '/store' },
@@ -28,7 +31,17 @@ export default function Header() {
                </button>
             ))}
          </div>
-         <button className='text-(--text-faint) sans py-2 px-4 border rounded-3xl border-(--line) hover:border-(--gold) hover:text-white hover:bg-(--gold-soft) transition-colors duration-300'>Carrito</button>
+         <button
+            onClick={openCart}
+            className='relative text-(--text-faint) sans py-2 px-4 border rounded-3xl border-(--line) hover:border-(--gold) hover:text-white hover:bg-(--gold-soft) transition-colors duration-300'
+         >
+            Carrito
+            {itemCount > 0 && (
+               <span className='absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] flex items-center justify-center px-1 text-[10px] font-bold text-(--bg) bg-(--gold) rounded-full leading-none'>
+                  {itemCount}
+               </span>
+            )}
+         </button>
       </header>
    )
 }

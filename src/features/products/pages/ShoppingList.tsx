@@ -1,7 +1,25 @@
+import { useState } from 'react'
 import '../../../index.css'
 import { ProductsSection } from '../components/ProductsSection'
+import { useCartStore } from '../../cart/store/cartStore'
+import type { Product } from '../types'
 
 const ShoppingList = () => {
+   const [flashIds, setFlashIds] = useState<Set<number>>(new Set())
+   const addItem = useCartStore((s) => s.addItem)
+
+   const handleAdd = (product: Product, qty = 1) => {
+      addItem(product, qty)
+      setFlashIds((prev) => new Set(prev).add(product.id))
+      setTimeout(() => {
+         setFlashIds((prev) => {
+            const next = new Set(prev)
+            next.delete(product.id)
+            return next
+         })
+      }, 600)
+   }
+
    return (
       <>
          <div className="bg-(--bg) flex flex-col gap-6 w-full h-[60vh] justify-center px-20">
@@ -13,7 +31,7 @@ const ShoppingList = () => {
                </div>
             </div>
          </div>
-         <ProductsSection flashIds={new Set()} onAdd={() => {}} />
+         <ProductsSection flashIds={flashIds} onAdd={handleAdd} />
       </>
    )
 }

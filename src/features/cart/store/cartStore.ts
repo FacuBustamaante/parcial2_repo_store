@@ -1,0 +1,52 @@
+import { create } from "zustand";
+import type { CartItem } from "../types";
+import type { Product } from "../../products/types";
+
+interface CartStore {
+   items: CartItem[];
+   isOpen: boolean;
+   addItem: (product: Product, qty?: number) => void;
+   removeItem: (productId: number) => void;
+   updateQty: (productId: number, qty: number) => void;
+   clear: () => void;
+   openCart: () => void;
+   closeCart: () => void;
+}
+
+export const useCartStore = create<CartStore>((set) => ({
+   items: [],
+   isOpen: false,
+   openCart: () => set({ isOpen: true }),
+   closeCart: () => set({ isOpen: false }),
+
+   addItem: (product, qty = 1) =>
+      set((state) => {
+         const existing = state.items.find((i) => i.product.id === product.id);
+         if (existing) {
+            return {
+               items: state.items.map((i) =>
+                  i.product.id === product.id
+                     ? { ...i, qty: Math.min(product.stock_cantidad, i.qty + qty) }
+                     : i
+               ),
+            };
+         }
+         return {
+            items: [...state.items, { product, qty: Math.min(product.stock_cantidad, qty) }],
+         };
+      }),
+
+   removeItem: (productId) =>
+      set((state) => ({
+         items: state.items.filter((i) => i.product.id !== productId),
+      })),
+
+   updateQty: (productId, qty) =>
+      set((state) => ({
+         items: state.items.map((i) =>
+            i.product.id === productId ? { ...i, qty } : i
+         ),
+      })),
+
+   clear: () => set({ items: [] }),
+}));
