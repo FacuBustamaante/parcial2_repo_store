@@ -8,4 +8,11 @@ const api = axios.create({
    },
 });
 
+api.interceptors.response.use((response) => {
+   if (response.data?.data !== undefined) {
+      response.data = response.data.data;
+   }
+   return response;
+});
+
 export default api;

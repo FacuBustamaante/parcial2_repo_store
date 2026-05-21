@@ -1,4 +1,4 @@
-import api from "../../../shared/utils/axios";
+import api from "../../../api/axios";
 import type { Product, Category } from "../types";
 
 /* PRODUCTOS */
@@ -18,7 +18,7 @@ export const getProductById = async (id: number): Promise<Product> => {
    return data;
 };
 
-/* CATEGORIAS */
+/* CATEGORÍAS */
 
 export async function getCategories(): Promise<Category[]> {
    const { data } = await api.get("/categorias");

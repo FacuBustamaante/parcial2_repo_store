@@ -18,7 +18,7 @@ export function ProductDetailModal({ product, onClose, onAdd }: ProductDetailMod
 
    if (!product) return null;
 
-   const inc = () => setQty((q) => Math.min(product.stock, q + 1));
+   const inc = () => setQty((q) => Math.min(product.stock_cantidad, q + 1));
    const dec = () => setQty((q) => Math.max(1, q - 1));
 
    return (
@@ -31,26 +31,27 @@ export function ProductDetailModal({ product, onClose, onAdd }: ProductDetailMod
 
             <div className='grid-detail'>
                <div className='media-detail'>
+                  <img src={product.imagenes_url[0]} alt={product.nombre} className='w-full h-full object-cover rounded-2xl' />
                </div>
 
                <div>
-                  <span className='block mb-2 text-[0.72rem] font-bold tracking-widest uppercase text-(--gold)'>{product.categoria}</span>
+                  <span className='block mb-2 text-[0.72rem] font-bold tracking-widest uppercase text-(--gold)'>{product.categorias[0].nombre}</span>
                   <h2 className='text-[1.6rem] serif font-bold text-(--text) leading-[1.2] mb-2.5'>{product.nombre}</h2>
-                  <p className='text-[1.4rem] sans text-(--gold) mb-4'>{formatARS(product.precio)}</p>
-                  <p className='text-[0.88rem] sans text-(--text) leading-[1.65] mb-6'>{product.descripcionLarga}</p>
+                  <p className='text-[1.4rem] sans text-(--gold) mb-4'>{formatARS(product.precio_base)}</p>
+                  <p className='text-[0.88rem] sans text-(--text) leading-[1.65] mb-6'>{product.descripcion}</p>
 
                   <dl className='flex flex-col gap-2 mb-7 p-4 bg-(--bg) text-(--text-faint) border-2 border-(--line) rounded-[10px]'>
                      <div className='flex justify-between items-center gap-2'>
                         <dt>Stock disponible</dt>
-                        <dd>{product.stock} unidades</dd>
+                        <dd>{product.stock_cantidad} unidades</dd>
                      </div>
                      <div className='flex justify-between border-t-2 pt-1 border-(--line) items-center gap-2'>
                         <dt>Categoría</dt>
-                        <dd>{product.categoria}</dd>
+                        <dd>{product.categorias[0].nombre}</dd>
                      </div>
                      <div className='flex justify-between border-t-2 pt-1 border-(--line) items-center gap-2'>
-                        <dt>Referencia</dt>
-                        <dd>{product.id.toUpperCase()}</dd>
+                        <dt>Ingredientes</dt>
+                        <dd>{product.ingredientes.map((ing) => ing.nombre).join(", ")}</dd>
                      </div>
                   </dl>
 
@@ -72,7 +73,7 @@ export function ProductDetailModal({ product, onClose, onAdd }: ProductDetailMod
                            onClose();
                         }}
                      >
-                        Agregar al carrito · {formatARS(product.precio * qty)}
+                        Agregar al carrito · {formatARS(product.precio_base * qty)}
                      </button>
                   </div>
                </div>
