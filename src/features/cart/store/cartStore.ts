@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import type { CartItem } from "../types";
 import type { Product } from "../../products/types";
 
@@ -13,7 +14,9 @@ interface CartStore {
    closeCart: () => void;
 }
 
-export const useCartStore = create<CartStore>((set) => ({
+export const useCartStore = create<CartStore>()(
+   persist(
+      (set) => ({
    items: [],
    isOpen: false,
    openCart: () => set({ isOpen: true }),
@@ -49,4 +52,10 @@ export const useCartStore = create<CartStore>((set) => ({
       })),
 
    clear: () => set({ items: [] }),
-}));
+      }),
+      {
+         name: "cart-storage",
+         partialize: (state) => ({ items: state.items }),
+      }
+   )
+);

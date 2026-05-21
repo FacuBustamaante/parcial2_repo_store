@@ -37,7 +37,7 @@ export default function Header() {
          >
             Carrito
             {itemCount > 0 && (
-               <span className='absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] flex items-center justify-center px-1 text-[10px] font-bold text-(--bg) bg-(--gold) rounded-full leading-none'>
+               <span className='absolute -top-1.5 -right-1.5 min-w-4.5 h-4.5 flex items-center justify-center px-1 text-[10px] font-bold text-(--bg) bg-(--gold) rounded-full leading-none'>
                   {itemCount}
                </span>
             )}
