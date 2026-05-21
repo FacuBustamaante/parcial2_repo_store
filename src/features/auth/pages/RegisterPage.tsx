@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../../store/useAuthStore";
 import { useState } from "react";
 import type { RegisterPayload } from "../types/api";
+import { useRegisterMutation } from "../hooks/useAuth";
 
 /**
  * Página de Registro - Módulo Auth
@@ -9,9 +9,7 @@ import type { RegisterPayload } from "../types/api";
 export function RegisterPage() {
    const navigate = useNavigate();
 
-   const register = useAuthStore((s) => s.register);
-   const error = useAuthStore((s) => s.error);
-   const setError = useAuthStore((s) => s.setError);
+   const { mutateAsync: register, isPending, error } = useRegisterMutation();
 
    const [formData, setFormData] = useState<RegisterPayload>({
       nombre: "",
@@ -22,8 +20,7 @@ export function RegisterPage() {
    });
 
    const [passwordConfirm, setPasswordConfirm] = useState("");
-
-   const [isLoading, setIsLoading] = useState(false);
+   const [localError, setLocalError] = useState<string | null>(null);
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
@@ -35,26 +32,19 @@ export function RegisterPage() {
    };
 
    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-
-      setError(null);
-
-      if (formData.password !== passwordConfirm) {
-         setError("Las contraseñas no coinciden");
-         return;
-      }
-
-      setIsLoading(true);
-
-      try {
-         await register(formData);
-         navigate("/store");
-      } catch {
-         // El error ya está manejado en el store
-      } finally {
-         setIsLoading(false);
-      }
-   };
+   e.preventDefault();
+   if (formData.password !== passwordConfirm) {
+      // para este caso local podés seguir usando un useState de error local
+      setLocalError("Las contraseñas no coinciden");
+      return;
+   }
+   try {
+      await register(formData);
+      navigate("/store");
+   } catch {
+      // error ya está en `error` de useMutation
+   }
+};
 
    const inputClass = "w-full bg-transparent border border-(--line) rounded-lg px-4 py-3 text-white text-sm sans placeholder:text-(--text-faint) focus:outline-none focus:border-(--gold) transition-colors duration-200 disabled:opacity-50";
    const labelClass = "uppercase text-(--text-faint) text-[9px] tracking-[0.32em] sans";
@@ -69,9 +59,9 @@ export function RegisterPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-               {error && (
+               {localError && (
                   <div className="px-4 py-3 rounded-lg border border-red-900/40 bg-red-950/30 text-red-400 text-sm sans">
-                     {error}
+                     {error?.message}
                   </div>
                )}
 
@@ -86,7 +76,7 @@ export function RegisterPage() {
                         value={formData.nombre}
                         onChange={handleChange}
                         required
-                        disabled={isLoading}
+                        disabled={isPending}
                         placeholder="Tu nombre"
                         className={inputClass}
                      />
@@ -100,7 +90,7 @@ export function RegisterPage() {
                         value={formData.apellido}
                         onChange={handleChange}
                         required
-                        disabled={isLoading}
+                        disabled={isPending}
                         placeholder="Tu apellido"
                         className={inputClass}
                      />
@@ -117,7 +107,7 @@ export function RegisterPage() {
                      value={formData.email}
                      onChange={handleChange}
                      required
-                     disabled={isLoading}
+                     disabled={isPending}
                      placeholder="tu@email.com"
                      className={inputClass}
                   />
@@ -132,7 +122,7 @@ export function RegisterPage() {
                      name="celular"
                      value={formData.celular}
                      onChange={handleChange}
-                     disabled={isLoading}
+                     disabled={isPending}
                      placeholder="Tu celular"
                      className={inputClass}
                   />
@@ -149,7 +139,7 @@ export function RegisterPage() {
                         value={formData.password}
                         onChange={handleChange}
                         required
-                        disabled={isLoading}
+                        disabled={isPending}
                         placeholder="••••••••"
                         className={inputClass}
                      />
@@ -162,7 +152,7 @@ export function RegisterPage() {
                         value={passwordConfirm}
                         onChange={(e) => setPasswordConfirm(e.target.value)}
                         required
-                        disabled={isLoading}
+                        disabled={isPending}
                         placeholder="••••••••"
                         className={inputClass}
                      />
@@ -171,10 +161,10 @@ export function RegisterPage() {
 
                <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isPending}
                   className="w-full mt-2 py-3.5 text-[0.82rem] font-semibold tracking-[0.04em] uppercase sans text-(--bg) bg-(--gold) rounded-lg cursor-pointer transition-[background,transform] duration-200 hover:bg-(--gold-deep) active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
                >
-                  {isLoading ? "Registrando…" : "Crear cuenta"}
+                  {isPending ? "Registrando…" : "Crear cuenta"}
                </button>
             </form>
 

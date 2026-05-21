@@ -1,22 +1,21 @@
-import { useState, useEffect } from "react";
 import { getProducts, getCategories } from "../services/products";
-import type { Product, Category } from "../types";
+import { useQuery } from "@tanstack/react-query";
 
 export function useProducts() {
-   const [products, setProducts] = useState<Product[]>([]);
-   const [categories, setCategories] = useState<Category[]>([]);
-   const [loading, setLoading] = useState(true);
-   const [error, setError] = useState<string | null>(null);
+   const productsQuery = useQuery({
+      queryKey: ["products"],
+      queryFn: getProducts,
+   });
 
-   useEffect(() => {
-      Promise.all([getProducts(), getCategories()])
-         .then(([prods, cats]) => {
-            setProducts(prods);
-            setCategories(cats);
-         })
-         .catch(() => setError("Error al cargar los productos"))
-         .finally(() => setLoading(false));
-   }, []);
-   
-   return { products, categories, loading, error };
+   const categoriesQuery = useQuery({
+      queryKey: ["categories"],
+      queryFn: getCategories,
+   });
+
+   return {
+      products: productsQuery.data ?? [],
+      categories: categoriesQuery.data ?? [],
+      loading: productsQuery.isLoading || categoriesQuery.isLoading,
+      error: productsQuery.error || categoriesQuery.error,
+   };
 }

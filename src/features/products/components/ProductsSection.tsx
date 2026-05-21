@@ -20,7 +20,7 @@ export function ProductsSection({ onAdd, flashIds }: ProductsSectionProps) {
    }, [activeCat, query, products]);
 
    if (loading) return <div className="text-center py-16 text-white">Cargando productos...</div>;
-   if (error) return <div className="text-center py-16 text-red-400">{error}</div>;
+   if (error) return <div className="text-center py-16 text-red-400">{error?.message}</div>;
 
 
    return (

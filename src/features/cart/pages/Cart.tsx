@@ -13,6 +13,10 @@ export default function Cart() {
    const totalUnits = items.reduce((acc, i) => acc + i.qty, 0);
    const totalPrice = items.reduce((acc, i) => acc + i.product.precio_base * i.qty, 0);
 
+   const handleCheckout = () => {
+      console.log("pedido creado...")
+   }
+
    return (
       <div className="bg-(--bg) min-h-screen">
          <div className="max-w-3xl mx-auto px-6 py-10">
@@ -66,7 +70,10 @@ export default function Cart() {
                         <span className="text-(--text-faint) sans text-xs uppercase tracking-widest">Total</span>
                         <span className="serif text-(--gold) text-2xl font-bold">{formatARS(totalPrice)}</span>
                      </div>
-                     <button className="w-full mt-2 py-3.5 text-[0.82rem] font-semibold tracking-[0.04em] uppercase sans text-(--bg) bg-(--gold) rounded-lg cursor-pointer transition-[background,transform] duration-200 hover:bg-(--gold-deep) active:scale-[0.98]">
+                     <button 
+                     onClick={handleCheckout}
+                     className="w-full mt-2 py-3.5 text-[0.82rem] font-semibold tracking-[0.04em] uppercase sans text-(--bg) bg-(--gold) rounded-lg cursor-pointer transition-[background,transform] duration-200 hover:bg-(--gold-deep) active:scale-[0.98]"
+                     >
                         Confirmar pedido
                      </button>
                   </div>

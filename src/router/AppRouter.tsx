@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Orders from "../features/products/pages/Orders";
+import Orders from "../features/orders/pages/Orders";
 import ShoppingList from "../features/products/pages/ShoppingList";
 import { CartDrawer } from "../features/cart/components/CartDrawer";
 import Header from "../shared/Header";

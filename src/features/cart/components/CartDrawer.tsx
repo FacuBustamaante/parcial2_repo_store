@@ -4,15 +4,28 @@ import { CartItem } from "./CartItem";
 import { formatARS } from "../../../shared/formatARS";
 import "../../../index.css";
 import { ArrowIcon } from "../../../shared/Icons";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../../store/useAuthStore";
 
 export function CartDrawer() {
    const isOpen = useCartStore((s) => s.isOpen);
    const closeCart = useCartStore((s) => s.closeCart);
    const items = useCartStore((s) => s.items);
    const clear = useCartStore((s) => s.clear);
+   const navigate = useNavigate();
 
    const totalUnits = items.reduce((acc, i) => acc + i.qty, 0);
    const totalPrice = items.reduce((acc, i) => acc + i.product.precio_base * i.qty, 0);
+   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+
+   const handleCheckout = () => {
+      if (!isAuthenticated) {
+         closeCart();
+         navigate("/login");
+      } else {
+         alert("pedido creado...");
+      }
+   }
 
    useEffect(() => {
       const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeCart();
@@ -89,7 +102,9 @@ export function CartDrawer() {
                      <span className="text-(--text-faint) sans text-xs uppercase tracking-widest">Total</span>
                      <span className="serif text-(--gold) text-2xl font-bold">{formatARS(totalPrice)}</span>
                   </div>
-                  <button className="w-full py-3.5 text-[0.82rem]  tracking-[0.04em] border border-(--gold) uppercase sans text-(--text) bg-(--surface) rounded-lg cursor-pointer transition-[background,transform] duration-200 hover:bg-(--gold-deep) hover:text-(--surface) active:scale-[0.98]">
+                  <button
+                     onClick={handleCheckout}
+                     className="w-full py-3.5 text-[0.82rem]  tracking-[0.04em] border border-(--gold) uppercase sans text-(--text) bg-(--surface) rounded-lg cursor-pointer transition-[background,transform] duration-200 hover:bg-(--gold-deep) hover:text-(--surface) active:scale-[0.98]">
                      Confirmar pedido <ArrowIcon dir="right" size={14} />
                   </button>
                </div>

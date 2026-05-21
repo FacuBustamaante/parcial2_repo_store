@@ -10,7 +10,7 @@ export default function Header() {
 
    const navItems = [
       { label: 'Productos', path: '/store' },
-      { label: 'Pedidos', path: '/orders' },
+      { label: 'Mis Pedidos', path: '/orders' },
    ]
 
    return (
