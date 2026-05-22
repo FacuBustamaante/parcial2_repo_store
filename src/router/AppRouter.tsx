@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Orders from "../features/orders/pages/Orders";
 import ShoppingList from "../features/products/pages/ShoppingList";
@@ -5,8 +6,15 @@ import { CartDrawer } from "../features/cart/components/CartDrawer";
 import Header from "../shared/Header";
 import { LoginPage } from "../features/auth/pages/LoginPage";
 import { RegisterPage } from "../features/auth/pages/RegisterPage";
+import { useAuthStore } from "../store/useAuthStore";
 
 const AppRouter = () => {
+   const checkAuth = useAuthStore((s) => s.checkAuth);
+
+   useEffect(() => {
+      checkAuth();
+   }, []);
+
    return (
       <BrowserRouter>
          <Header />

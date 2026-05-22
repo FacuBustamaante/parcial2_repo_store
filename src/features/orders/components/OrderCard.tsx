@@ -98,6 +98,14 @@ const OrderCard = ({ orders, user, loading, error }: OrderCardProps) => {
                               <span className="text-(--text-faint) sans text-xs uppercase tracking-widest">Total</span>
                               <span className="serif text-(--gold) text-2xl font-bold">{formatARS(Number(order.total))}</span>
                            </div>
+                           <div>
+                              {order.detalles.map(item => (
+                                 <div key={item.producto_id} className="flex justify-between text-sm sans text-(--text) mt-3">
+                                    <span>{item.nombre_snapshot} x{item.cantidad}</span>
+                                    <span>{formatARS(Number(item.precio_snapshot) * item.cantidad)}</span>
+                                 </div>
+                              ))}
+                           </div>
                         </div>
                      </div>
                   )}

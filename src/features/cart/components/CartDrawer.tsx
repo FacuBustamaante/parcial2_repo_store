@@ -1,31 +1,59 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCartStore } from "../store/cartStore";
 import { CartItem } from "./CartItem";
 import { formatARS } from "../../../shared/formatARS";
-import "../../../index.css";
 import { ArrowIcon } from "../../../shared/Icons";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../store/useAuthStore";
+import { useOrders } from "../../orders/hooks/useOrders";
 
 export function CartDrawer() {
    const isOpen = useCartStore((s) => s.isOpen);
    const closeCart = useCartStore((s) => s.closeCart);
    const items = useCartStore((s) => s.items);
    const clear = useCartStore((s) => s.clear);
+   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
    const navigate = useNavigate();
+   const { createOrder, isCreating } = useOrders();
+   const [direccionId, setDireccionId] = useState<number | "">("");
+   const [notas, setNotas] = useState("");
+   const { user } = useOrders();
 
    const totalUnits = items.reduce((acc, i) => acc + i.qty, 0);
    const totalPrice = items.reduce((acc, i) => acc + i.product.precio_base * i.qty, 0);
-   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
    const handleCheckout = () => {
       if (!isAuthenticated) {
          closeCart();
          navigate("/login");
-      } else {
-         alert("pedido creado...");
+         return;
       }
-   }
+
+      const detalles = items.map((item) => ({
+         producto_id: item.product.id,
+         cantidad: item.qty,
+         personalizacion: [],
+      }));
+
+      createOrder(
+         {
+            direccion_id: direccionId as number,
+            forma_pago_codigo: "TARJETA",
+            notas,
+            detalles,
+         },
+         {
+            onSuccess: () => {
+               clear();       // vaciás el carrito
+               closeCart();   // cerrás el drawer
+               navigate("/orders"); // redirigís a la sección de pedidos
+            },
+            onError: (error) => {
+               console.error("Error al crear pedido:", error);
+            },
+         }
+      );
+   };
 
    useEffect(() => {
       const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeCart();
@@ -80,9 +108,39 @@ export function CartDrawer() {
                      <p className="text-sm text-(--text-faint) sans">Explorá nuestra selección y agregá platos a tu pedido.</p>
                   </div>
                ) : (
-                  items.map((item) => (
-                     <CartItem key={item.product.id} item={item} />
-                  ))
+                  <>
+                     {items.map((item) => (
+                        <CartItem key={item.product.id} item={item} />
+                     ))}
+
+                     <div className="flex flex-col gap-4 py-5 border-t border-(--line) mt-2">
+                        <div className="flex flex-col gap-1.5">
+                           <label className="text-xs uppercase tracking-widest text-(--text-faint) sans">Dirección de entrega</label>
+                           <select
+                              value={direccionId}
+                              onChange={(e) => setDireccionId(Number(e.target.value))}
+                              className="w-full bg-(--surface) border border-(--line) rounded-lg px-3 py-2.5 text-sm text-(--text) sans focus:outline-none focus:border-(--gold)"
+                           >
+                              {user?.direcciones.map((dir) => (
+                                 <option key={dir.id} value={dir.id}>
+                                    {dir.linea1} {dir.linea2}, {dir.ciudad}
+                                 </option>
+                              ))}
+                           </select>
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                           <label className="text-xs uppercase tracking-widest text-(--text-faint) sans">Notas</label>
+                           <input
+                              type="text"
+                              value={notas}
+                              onChange={(e) => setNotas(e.target.value)}
+                              placeholder="Instrucciones especiales..."
+                              className="w-full bg-(--surface) border border-(--line) rounded-lg px-3 py-2.5 text-sm text-(--text) sans placeholder:text-(--text-faint) focus:outline-none focus:border-(--gold)"
+                           />
+                        </div>
+                     </div>
+                  </>
                )}
             </div>
 
@@ -104,8 +162,9 @@ export function CartDrawer() {
                   </div>
                   <button
                      onClick={handleCheckout}
-                     className="w-full py-3.5 text-[0.82rem]  tracking-[0.04em] border border-(--gold) uppercase sans text-(--text) bg-(--surface) rounded-lg cursor-pointer transition-[background,transform] duration-200 hover:bg-(--gold-deep) hover:text-(--surface) active:scale-[0.98]">
-                     Confirmar pedido <ArrowIcon dir="right" size={14} />
+                     disabled={isCreating}
+                     className="w-full py-3.5 text-[0.82rem] tracking-[0.04em] border border-(--gold) uppercase sans text-(--text) bg-(--surface) rounded-lg cursor-pointer transition-[background,transform] duration-200 hover:bg-(--gold-deep) hover:text-(--surface) active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">
+                     {isCreating ? "Procesando..." : <> Confirmar pedido <ArrowIcon dir="right" size={14} /> </>}
                   </button>
                </div>
             )}

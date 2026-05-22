@@ -5,6 +5,7 @@ import type {
    RegisterPayload,
    UserRole,
 } from "../features/auth/types/api";
+import { queryClient } from "../main";
 
 // ───────────────────────────────────────────────────────────────────────
 // store global de autenticación usando Zustand. El store guarda únicamente información no sensible del usuario (user, isAuthenticated, isLoading, error), mientras que el JWT real vive en una cookie HTTPOnly manejada por el navegador y el backend. La idea es que el frontend nunca tenga acceso directo al token, aumentando la seguridad. El create<AuthState>() define tanto el estado como las funciones para manejar login, logout, registro y validación de sesión.
@@ -112,6 +113,8 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
          // dejará de ver contenido protegido y un eventual 401 posterior
          // terminará de sincronizar la cookie.
       }
+      queryClient.removeQueries({ queryKey: ["orders"] });
+      queryClient.removeQueries({ queryKey: ["user"] });
       set({ user: null, isAuthenticated: false, error: null, isLoading: false });
    },
 }));

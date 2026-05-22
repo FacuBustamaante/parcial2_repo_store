@@ -10,7 +10,7 @@ export async function getOrders(): Promise<OrderResponse[]> {
 }
 
 export const getOrdersById = async (id: number): Promise<OrderResponse> => {
-   const { data } = await api.get(`/api/v1/pedidos/mis-pedidos${id}`);
+   const { data } = await api.get(`/api/v1/pedidos/${id}`);
    return data;
 };
 

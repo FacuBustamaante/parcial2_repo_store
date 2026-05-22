@@ -1,5 +1,13 @@
 import { type Usuario } from "../types/user";
 
+export interface Detalles {
+   producto_id: number;
+   cantidad: number;
+   nombre_snapshot: string;
+   precio_snapshot: string;
+   subtotal_snap: string;
+}
+
 export interface OrderResponse {
    id: number;
    usuario_id: number;
@@ -11,6 +19,7 @@ export interface OrderResponse {
    costo_envio: string;
    total: string;
    notas: string;
+   detalles: Detalles[];
 }
 
 export interface Personalizacion {
