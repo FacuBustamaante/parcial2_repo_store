@@ -18,3 +18,11 @@ export function useRegisterMutation() {
       mutationFn: (payload: RegisterPayload) => register(payload),
    });
 }
+
+export function useLogoutMutation() {
+   const logout = useAuthStore((s) => s.logout);
+
+   return useMutation({
+      mutationFn: () => logout(),
+   });
+}

@@ -4,6 +4,7 @@ import { SearchIcon } from "../../../shared/Icons";
 import { ProductDetailModal } from "./ProductDetailModal";
 import { ProductCard } from "./ProductCard";
 import { useProducts } from "../hooks/useProducts";
+import { HashLoader } from "react-spinners";
 
 export function ProductsSection({ onAdd, flashIds }: ProductsSectionProps) {
    const [activeCat, setActiveCat] = useState("Todos");
@@ -19,7 +20,17 @@ export function ProductsSection({ onAdd, flashIds }: ProductsSectionProps) {
       });
    }, [activeCat, query, products]);
 
-   if (loading) return <div className="text-center py-16 text-white">Cargando productos...</div>;
+   if (loading) {
+      return (
+         <div className="flex gap-4 justify-center items-center">
+            <HashLoader
+               color="#C9A84C"
+               size={30}
+            />
+            <div className="text-center py-16 text-white">Cargando productos...</div>
+         </div>
+      );
+   }
    if (error) return <div className="text-center py-16 text-red-400">{error?.message}</div>;
 
 

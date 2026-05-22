@@ -5,7 +5,7 @@ import type { ProductCardProps } from "../types";
 
 export function ProductCard({ product, onAdd, onOpen, addedFlash }: ProductCardProps) {
    return (
-      <article className={`card ${addedFlash ? 'flash' : ""}`}>
+      <article className={`card border-2 border-(--surface) ${addedFlash ? 'flash' : ""}`}>
          <div className='relative h-80 overflow-hidden '>
             <img
                src={product.imagenes_url[0]}
@@ -14,9 +14,9 @@ export function ProductCard({ product, onAdd, onOpen, addedFlash }: ProductCardP
             />
             <div className='veil' aria-hidden="true" />
             <div className='overlay'>
-               <p className='text-[0.8rem] text-(--text) mb-2.5 leading-[1.4]'>{product.descripcion}</p>
+               <p className='text-[0.8rem] sans text-(--text) mb-2.5 leading-[1.4]'>{product.descripcion}</p>
                <button
-                  className='inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold tracking-[0.04em] text-white bg-transparent border border-white rounded-sm cursor-pointer transition-[background,color] duration-200 hover:bg-white hover:text-(--bg)'
+                  className='inline-flex items-center sans gap-1.5 px-3.5 py-1.5 text-xs font-semibold tracking-[0.04em] text-white bg-transparent border border-white rounded-sm cursor-pointer transition-[background,color] duration-200 hover:bg-white hover:text-(--bg)'
                   onClick={() => onOpen(product)}
                >
                   Ver detalle <ArrowIcon size={12} />
@@ -31,7 +31,7 @@ export function ProductCard({ product, onAdd, onOpen, addedFlash }: ProductCardP
                <p className='serif font-bold text-(--gold)'>{formatARS(product.precio_base)}</p>
             </div>
             <button
-               className='w-full uppercase p-2.5 text-[0.82rem] font-semibold tracking-[0.04em] text-(--text) bg-(--bg) border rounded-sm cursor-pointer transition-[background,transform] duration-200 ease-in-out mt-auto hover:bg-(--gold) hover:text-(--bg) active:scale-[0.98]'
+               className='w-full uppercase p-2.5 text-[0.82rem] font-semibold tracking-[0.04em] text-(--text) bg-(--bg) border-2 border-(--line) rounded-sm cursor-pointer transition-[background,transform] duration-200 ease-in-out mt-auto hover:bg-(--gold) hover:text-(--bg) active:scale-[0.98]'
                onClick={() => onAdd(product)}
             >
                Agregar al carrito

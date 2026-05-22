@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useCartStore } from '../features/cart/store/cartStore'
+import { useAuthStore } from '../store/useAuthStore'
 import '../index.css'
 
 export default function Header() {
@@ -7,6 +8,13 @@ export default function Header() {
    const { pathname } = useLocation()
    const itemCount = useCartStore((s) => s.items.reduce((acc, i) => acc + i.qty, 0))
    const openCart = useCartStore((s) => s.openCart)
+   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+   const logout = useAuthStore((s) => s.logout);
+
+   const handleLogout = () => {
+      logout();
+      navigate("/store");
+   }
 
    const navItems = [
       { label: 'Productos', path: '/store' },
@@ -31,17 +39,25 @@ export default function Header() {
                </button>
             ))}
          </div>
-         <button
-            onClick={openCart}
-            className='relative text-(--text-faint) sans py-2 px-4 border rounded-3xl border-(--line) hover:border-(--gold) hover:text-white hover:bg-(--gold-soft) transition-colors duration-300'
-         >
-            Carrito
-            {itemCount > 0 && (
-               <span className='absolute -top-1.5 -right-1.5 min-w-4.5 h-4.5 flex items-center justify-center px-1 text-[10px] font-bold text-(--bg) bg-(--gold) rounded-full leading-none'>
-                  {itemCount}
-               </span>
-            )}
-         </button>
+         <div className='flex gap-4'>
+            <button
+               onClick={isAuthenticated ? handleLogout : () => navigate("/login")}
+               className='text-(--text-faint) sans py-2 px-4 border rounded-3xl border-(--line) hover:border-(--gold) hover:text-white hover:bg-(--gold-soft) transition-colors duration-300'
+            >
+               {isAuthenticated ? "Cerrar sesión" : "Iniciar sesión"}
+            </button>
+            <button
+               onClick={openCart}
+               className='relative text-(--text-faint) sans py-2 px-4 border rounded-3xl border-(--line) hover:border-(--gold) hover:text-white hover:bg-(--gold-soft) transition-colors duration-300'
+            >
+               Carrito
+               {itemCount > 0 && (
+                  <span className='absolute -top-1.5 -right-1.5 min-w-4.5 h-4.5 flex items-center justify-center px-1 text-[10px] font-bold text-(--bg) bg-(--gold) rounded-full leading-none'>
+                     {itemCount}
+                  </span>
+               )}
+            </button>
+         </div>
       </header>
    )
 }
