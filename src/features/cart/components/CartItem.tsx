@@ -7,10 +7,28 @@ interface CartItemProps {
    item: CartItemType;
 }
 
+function IngredientSwitch({ checked, onChange, label }: { checked: boolean; onChange: () => void; label: string }) {
+   return (
+      <button
+         role="switch"
+         aria-checked={checked}
+         aria-label={label}
+         onClick={onChange}
+         className={`relative inline-flex h-4 w-7 shrink-0 cursor-pointer rounded-full transition-colors duration-200 ${checked ? "bg-(--gold)" : "bg-(--line)"}`}
+      >
+         <span
+            className={`pointer-events-none inline-block h-3 w-3 rounded-full bg-white shadow transition-transform duration-200 mt-0.5 ${checked ? "translate-x-3.5" : "translate-x-0.5"}`}
+         />
+      </button>
+   );
+}
+
 export function CartItem({ item }: CartItemProps) {
    const { product, qty } = item;
+   const personalizacion = useCartStore((s) => s.personalizacion);
    const updateQty = useCartStore((s) => s.updateQty);
    const removeItem = useCartStore((s) => s.removeItem);
+   const toggleIngrediente = useCartStore((s) => s.toggleIngrediente);
 
    const inc = () => updateQty(product.id, Math.min(product.stock_cantidad, qty + 1));
    const dec = () => {
@@ -59,6 +77,29 @@ export function CartItem({ item }: CartItemProps) {
                   {formatARS(product.precio_base * qty)}
                </p>
             </div>
+
+            {/* Ingredientes */}
+            {product.ingredientes.length > 0 && (
+               <div className="flex flex-col gap-1.5 mt-1 pt-2 border-t border-(--line)">
+                  <p className="text-[0.6rem] uppercase tracking-widest text-(--text-faint) sans">Ingredientes</p>
+                  {product.ingredientes.map((ing) => {
+                     const isIncluded = !personalizacion.includes(ing.id);
+                     return (
+                        <div key={ing.id} className="flex items-center justify-between gap-2">
+                           <span className={`text-xs sans transition-colors ${isIncluded ? "text-(--text)" : "text-(--text-faint) line-through"}`}>
+                              {ing.nombre}
+                           </span>
+                           <IngredientSwitch
+                              checked={isIncluded}
+                              onChange={() => toggleIngrediente(ing.id)}
+                              label={isIncluded ? `Quitar ${ing.nombre}` : `Agregar ${ing.nombre}`}
+                           />
+
+                        </div>
+                     );
+                  })}
+               </div>
+            )}
          </div>
       </div>
    );

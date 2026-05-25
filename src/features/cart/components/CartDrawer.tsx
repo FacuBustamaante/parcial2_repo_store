@@ -8,16 +8,21 @@ import { useAuthStore } from "../../../store/useAuthStore";
 import { useOrders } from "../../orders/hooks/useOrders";
 
 export function CartDrawer() {
+
    const isOpen = useCartStore((s) => s.isOpen);
    const closeCart = useCartStore((s) => s.closeCart);
    const items = useCartStore((s) => s.items);
+   const personalizacion = useCartStore((s) => s.personalizacion);
    const clear = useCartStore((s) => s.clear);
    const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
    const navigate = useNavigate();
    const { createOrder, isCreating } = useOrders();
    const [direccionId, setDireccionId] = useState<number | "">("");
    const [notas, setNotas] = useState("");
+   const [formaPago, setFormaPago] = useState("");
    const { user } = useOrders();
+
+   const efectivaDireccionId = direccionId !== "" ? direccionId : (user?.direcciones?.[0]?.id ?? "");
 
    const totalUnits = items.reduce((acc, i) => acc + i.qty, 0);
    const totalPrice = items.reduce((acc, i) => acc + i.product.precio_base * i.qty, 0);
@@ -32,21 +37,21 @@ export function CartDrawer() {
       const detalles = items.map((item) => ({
          producto_id: item.product.id,
          cantidad: item.qty,
-         personalizacion: [],
+         personalizacion,
       }));
 
       createOrder(
          {
-            direccion_id: direccionId as number,
-            forma_pago_codigo: "TARJETA",
+            direccion_id: efectivaDireccionId as number,
+            forma_pago_codigo: formaPago,
             notas,
             detalles,
          },
          {
             onSuccess: () => {
-               clear();       // vaciás el carrito
-               closeCart();   // cerrás el drawer
-               navigate("/orders"); // redirigís a la sección de pedidos
+               clear();
+               closeCart();
+               navigate("/orders");
             },
             onError: (error) => {
                console.error("Error al crear pedido:", error);
@@ -113,11 +118,11 @@ export function CartDrawer() {
                         <CartItem key={item.product.id} item={item} />
                      ))}
 
-                     <div className="flex flex-col gap-4 py-5 border-t border-(--line) mt-2">
+                     <div className="flex flex-col gap-4 py-5  mt-2">
                         <div className="flex flex-col gap-1.5">
                            <label className="text-xs uppercase tracking-widest text-(--text-faint) sans">Dirección de entrega</label>
                            <select
-                              value={direccionId}
+                              value={efectivaDireccionId}
                               onChange={(e) => setDireccionId(Number(e.target.value))}
                               className="w-full bg-(--surface) border border-(--line) rounded-lg px-3 py-2.5 text-sm text-(--text) sans focus:outline-none focus:border-(--gold)"
                            >
@@ -128,7 +133,6 @@ export function CartDrawer() {
                               ))}
                            </select>
                         </div>
-
                         <div className="flex flex-col gap-1.5">
                            <label className="text-xs uppercase tracking-widest text-(--text-faint) sans">Notas</label>
                            <input
@@ -138,6 +142,19 @@ export function CartDrawer() {
                               placeholder="Instrucciones especiales..."
                               className="w-full bg-(--surface) border border-(--line) rounded-lg px-3 py-2.5 text-sm text-(--text) sans placeholder:text-(--text-faint) focus:outline-none focus:border-(--gold)"
                            />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                           <label className="text-xs uppercase tracking-widest text-(--text-faint) sans">Forma de pago</label>
+                           <select
+                              value={formaPago}
+                              onChange={(e) => setFormaPago(e.target.value)}
+                              className="w-full bg-(--surface) border border-(--line) rounded-lg px-3 py-2.5 text-sm text-(--text) sans focus:outline-none focus:border-(--gold)"
+                           >
+                              <option value="">Seleccionar forma de pago</option>
+                              <option value="TARJETA">Tarjeta</option>
+                              <option value="EFECTIVO">Efectivo</option>
+                              <option value="TRANSFERENCIA">Transferencia</option>
+                           </select>
                         </div>
                      </div>
                   </>
@@ -163,8 +180,10 @@ export function CartDrawer() {
                   <button
                      onClick={handleCheckout}
                      disabled={isCreating}
-                     className="w-full py-3.5 text-[0.82rem] tracking-[0.04em] border border-(--gold) uppercase sans text-(--text) bg-(--surface) rounded-lg cursor-pointer transition-[background,transform] duration-200 hover:bg-(--gold-deep) hover:text-(--surface) active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">
-                     {isCreating ? "Procesando..." : <> Confirmar pedido <ArrowIcon dir="right" size={14} /> </>}
+                     className="w-full flex items-center justify-between px-5 py-3.5 bg-(--gold) text-(--bg) rounded-lg font-semibold text-sm sans hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                     <span>{isCreating ? "Procesando..." : "Finalizar pedido"}</span>
+                     <ArrowIcon size={16} />
                   </button>
                </div>
             )}

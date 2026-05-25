@@ -6,6 +6,7 @@ export const useCartStore = create<CartStore>()(
    persist(
       (set) => ({
    items: [],
+   personalizacion: [],
    isOpen: false,
    openCart: () => set({ isOpen: true }),
    closeCart: () => set({ isOpen: false }),
@@ -27,6 +28,15 @@ export const useCartStore = create<CartStore>()(
          };
       }),
 
+   toggleIngrediente: (ingredienteId) =>
+      set((state) => {
+         const current = state.personalizacion;
+         const next = current.includes(ingredienteId)
+            ? current.filter((id) => id !== ingredienteId)
+            : [...current, ingredienteId];
+         return { personalizacion: next };
+      }),
+
    removeItem: (productId) =>
       set((state) => ({
          items: state.items.filter((i) => i.product.id !== productId),
@@ -39,11 +49,11 @@ export const useCartStore = create<CartStore>()(
          ),
       })),
 
-   clear: () => set({ items: [] }),
+   clear: () => set({ items: [], personalizacion: [] }),
       }),
       {
          name: "cart-storage",
-         partialize: (state) => ({ items: state.items }),
+         partialize: (state) => ({ items: state.items, personalizacion: state.personalizacion }),
       }
    )
 );

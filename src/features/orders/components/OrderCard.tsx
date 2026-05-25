@@ -79,6 +79,14 @@ const OrderCard = ({ orders, user, loading, error }: OrderCardProps) => {
                               Notas: <span className="text-(--text)">{order.notas}</span>
                            </p>
                         )}
+                        <div className="border-t border-(--line) pt-4">
+                           {order.detalles.map(item => (
+                              <div key={item.producto_id} className="flex justify-between text-sm sans text-(--text) mt-3">
+                                 <span>{item.nombre_snapshot} x{item.cantidad}</span>
+                                 <span>{formatARS(Number(item.precio_snapshot) * item.cantidad)}</span>
+                              </div>
+                           ))}
+                        </div>
                         <div className="flex flex-col gap-2 border-t border-(--line) pt-4">
                            <div className="flex justify-between text-sm sans text-(--text-faint)">
                               <span>Subtotal</span>
@@ -96,15 +104,12 @@ const OrderCard = ({ orders, user, loading, error }: OrderCardProps) => {
                            </div>
                            <div className="flex justify-between items-center border-t border-(--line) pt-3 mt-1">
                               <span className="text-(--text-faint) sans text-xs uppercase tracking-widest">Total</span>
-                              <span className="serif text-(--gold) text-2xl font-bold">{formatARS(Number(order.total))}</span>
-                           </div>
-                           <div>
-                              {order.detalles.map(item => (
-                                 <div key={item.producto_id} className="flex justify-between text-sm sans text-(--text) mt-3">
-                                    <span>{item.nombre_snapshot} x{item.cantidad}</span>
-                                    <span>{formatARS(Number(item.precio_snapshot) * item.cantidad)}</span>
-                                 </div>
-                              ))}
+                              <div className="flex items-center justify-items-center gap-5">
+                                 <span className={`pago-badge pago-${order.forma_pago_codigo}`}>
+                                    {order.forma_pago_codigo}
+                                 </span>
+                                 <span className="serif text-(--gold) text-2xl font-bold">{formatARS(Number(order.total))}</span>
+                              </div>
                            </div>
                         </div>
                      </div>

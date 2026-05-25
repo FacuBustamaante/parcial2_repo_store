@@ -6,6 +6,7 @@ export interface Detalles {
    nombre_snapshot: string;
    precio_snapshot: string;
    subtotal_snap: string;
+   personalizacion: number[];
 }
 
 export interface OrderResponse {

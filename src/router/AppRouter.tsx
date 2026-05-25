@@ -21,7 +21,7 @@ const AppRouter = () => {
          <CartDrawer />
          <main>
             <Routes>
-               <Route path="/" element={<h1 className="text-3xl font-bold">Programación IV | Parcial 1</h1>} />
+               <Route path="/" element={<ShoppingList />} />
                <Route path="/store" element={<ShoppingList />} />
                <Route path="/orders" element={<Orders />} />
                <Route path="/login" element={<LoginPage />} />

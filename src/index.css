@@ -173,6 +173,23 @@ body {
 .status-ENTREGADO  { color: var(--green); background: rgba(111, 177, 138, 0.10); border-color: rgba(111, 177, 138, 0.20); }
 .status-CANCELADO  { color: #f87171;      background: rgba(248, 113, 113, 0.10); border-color: rgba(248, 113, 113, 0.20); }
 
+/* ── Payment method badges ── */
+.pago-badge {
+   font-size: 0.7rem;
+   font-family: var(--sans);
+   font-weight: 600;
+   letter-spacing: 0.1em;
+   text-transform: uppercase;
+   padding: 0.125rem 0.5rem;
+   border-radius: 9999px;
+   border-width: 1px;
+   border-style: solid;
+}
+
+.pago-TARJETA       { color: var(--blue);  background: rgba(106, 160, 217, 0.10); border-color: rgba(106, 160, 217, 0.20); }
+.pago-EFECTIVO      { color: var(--green); background: rgba(111, 177, 138, 0.10); border-color: rgba(111, 177, 138, 0.20); }
+.pago-TRANSFERENCIA { color: var(--amber); background: rgba(224, 180, 80, 0.10);  border-color: rgba(224, 180, 80, 0.20); }
+
 .media-detail {
    border-radius: 12px;
    overflow: hidden;
