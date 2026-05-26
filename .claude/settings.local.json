@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\camil\\\\OneDrive\\\\Documentos\\\\Facultad\\\\Parcial 2 Prog\\\\Parcial 2 Prog IV\\\\parcial2_repo_store\" -Recurse -Name)",
-      "Bash(Select-Object -First 50)"
-    ]
-  }
-}
