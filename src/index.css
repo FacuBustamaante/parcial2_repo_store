@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
    --bg: #0D0D0D;
@@ -11,24 +12,23 @@
    --text-muted: rgba(245, 240, 232, 0.62);
    --text-faint: rgba(245, 240, 232, 0.40);
    --gold: #C9A84C;
+   --gold-light: #f1c869;
    --gold-deep: #A8862F;
    --gold-soft: rgba(201, 168, 76, 0.14);
    --gold-contrast: #1a1408;
    --amber: #E0B450;
    --blue: #6AA0D9;
    --green: #6FB18A;
-
+   --grey: rgb(213, 213, 213);
+   --deep-grey: rgb(139, 139, 139);
    --serif: "Playfair Display", "Cormorant Garamond", Georgia, serif;
    --sans: "DM Sans", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
    --mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
-
    --r-sm: 4px;
    --r-md: 8px;
    --r-lg: 14px;
-
    --header-h: 76px;
    --navbar-height: 120px;
-
    --grid-row-gap: 32px;
    --grid-col-gap: 24px;
    --card-gap: 18px;
@@ -47,18 +47,20 @@
    box-sizing: border-box;
 }
 
-body {
-   background-color: var(--bg);
+body{
+   @apply bg-(--bg);
+}
+
+:where(.dark, .dark *) body,
+.dark body {
+   @apply bg-zinc-100;
 }
 
 /*Animaciones*/
 .card {
    display: flex;
    flex-direction: column;
-   /*border: .5px solid var(--line);*/
-   border-radius: 15px;
    overflow: hidden;
-   background: #fff;
    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -167,11 +169,35 @@ body {
    border-style: solid;
 }
 
-.status-PENDIENTE  { color: var(--amber); background: rgba(224, 180, 80, 0.10); border-color: rgba(224, 180, 80, 0.20); }
-.status-CONFIRMADO { color: var(--green); background: rgba(111, 177, 138, 0.10); border-color: rgba(111, 177, 138, 0.20); }
-.status-ENVIADO    { color: var(--blue);  background: rgba(106, 160, 217, 0.10); border-color: rgba(106, 160, 217, 0.20); }
-.status-ENTREGADO  { color: var(--green); background: rgba(111, 177, 138, 0.10); border-color: rgba(111, 177, 138, 0.20); }
-.status-CANCELADO  { color: #f87171;      background: rgba(248, 113, 113, 0.10); border-color: rgba(248, 113, 113, 0.20); }
+.status-PENDIENTE {
+   color: var(--amber);
+   background: rgba(224, 180, 80, 0.10);
+   border-color: rgba(224, 180, 80, 0.20);
+}
+
+.status-CONFIRMADO {
+   color: var(--green);
+   background: rgba(111, 177, 138, 0.10);
+   border-color: rgba(111, 177, 138, 0.20);
+}
+
+.status-ENVIADO {
+   color: var(--blue);
+   background: rgba(106, 160, 217, 0.10);
+   border-color: rgba(106, 160, 217, 0.20);
+}
+
+.status-ENTREGADO {
+   color: var(--green);
+   background: rgba(111, 177, 138, 0.10);
+   border-color: rgba(111, 177, 138, 0.20);
+}
+
+.status-CANCELADO {
+   color: #f87171;
+   background: rgba(248, 113, 113, 0.10);
+   border-color: rgba(248, 113, 113, 0.20);
+}
 
 /* ── Payment method badges ── */
 .pago-badge {
@@ -186,9 +212,23 @@ body {
    border-style: solid;
 }
 
-.pago-TARJETA       { color: var(--blue);  background: rgba(106, 160, 217, 0.10); border-color: rgba(106, 160, 217, 0.20); }
-.pago-EFECTIVO      { color: var(--green); background: rgba(111, 177, 138, 0.10); border-color: rgba(111, 177, 138, 0.20); }
-.pago-TRANSFERENCIA { color: var(--amber); background: rgba(224, 180, 80, 0.10);  border-color: rgba(224, 180, 80, 0.20); }
+.pago-TARJETA {
+   color: var(--blue);
+   background: rgba(106, 160, 217, 0.10);
+   border-color: rgba(106, 160, 217, 0.20);
+}
+
+.pago-EFECTIVO {
+   color: var(--green);
+   background: rgba(111, 177, 138, 0.10);
+   border-color: rgba(111, 177, 138, 0.20);
+}
+
+.pago-TRANSFERENCIA {
+   color: var(--amber);
+   background: rgba(224, 180, 80, 0.10);
+   border-color: rgba(224, 180, 80, 0.20);
+}
 
 .media-detail {
    border-radius: 12px;

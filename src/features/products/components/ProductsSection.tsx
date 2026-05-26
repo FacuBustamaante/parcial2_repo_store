@@ -36,15 +36,15 @@ export function ProductsSection({ onAdd, flashIds }: ProductsSectionProps) {
 
    return (
       <>
-         <section className='max-w-7xl mx-auto p-6 bg-(--bg)'>
-            <div className='flex items-center gap-3 text-white mb-6 bg-(--bg) border border-(--line) rounded-2xl px-4 py-2 w-full max-w-sm'>
+         <section className='max-w-7xl mx-auto p-6 bg-(--bg) dark:bg-zinc-100'>
+            <div className='flex items-center gap-3 text-white mb-6 bg-(--bg) dark:bg-zinc-100 dark:border-(--grey) dark:text-(--surface) border border-(--line) rounded-2xl px-4 py-2 w-full max-w-sm'>
                <SearchIcon size={16} />
                <input
                   type="text"
                   placeholder="Buscar por nombre"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className='bg-transparent focus:outline-none w-full text-sm'
+                  className='bg-transparent dark:text-(--surface) focus:outline-none w-full text-sm'
                />
             </div>
             {/* Filter pills */}
@@ -52,7 +52,7 @@ export function ProductsSection({ onAdd, flashIds }: ProductsSectionProps) {
                {["Todos", ...categories.map((c) => c.nombre)].map((cat) => (
                   <button
                      key={cat}
-                     className={`px-4 py-2 border border-(--line) rounded-full text-sm font-medium ${activeCat === cat ? 'bg-(--gold) text-white' : 'bg-(--bg) text-(--text) hover:bg-white hover:text-(--bg) transition-colors duration-300  '}`}
+                     className={`px-4 py-2 border border-(--line) rounded-full text-sm font-medium ${activeCat === cat ? 'bg-(--gold) text-white' : 'bg-(--bg) dark:bg-zinc-100 dark:border-(--grey) dark:hover:border-(--gold) dark:text-(--surface) dark:text(--surface) text-(--text) dark:hover:bg-(--gold) dark:hover:text-(--text) hover:bg-white hover:text-(--bg) transition-colors duration-300  '}`}
                      onClick={() => setActiveCat(cat)}
                   >
                      {cat}

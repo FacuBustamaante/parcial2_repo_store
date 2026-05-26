@@ -5,7 +5,7 @@ import type { ProductCardProps } from "../types";
 
 export function ProductCard({ product, onAdd, onOpen, addedFlash }: ProductCardProps) {
    return (
-      <article className={`card border-2 border-(--surface) ${addedFlash ? 'flash' : ""}`}>
+      <article className={`card dark:rounded-lg border-2 dark:border-zinc-100 border-(--surface) ${addedFlash ? 'flash' : ""}`}>
          <div className='relative h-80 overflow-hidden '>
             <img
                src={product.imagenes_url[0]}
@@ -22,16 +22,16 @@ export function ProductCard({ product, onAdd, onOpen, addedFlash }: ProductCardP
                   Ver detalle <ArrowIcon size={12} />
                </button>
             </div>
-            <span className='absolute top-3 left-3 px-1.5 py-0.5 text-[0.6rem] text-(--text) border border-(--line) font-semibold tracking-[0.06em] uppercase bg-(--bg) rounded-2xl'>{product.categorias[0]?.nombre}</span>
+            <span className='absolute top-3 left-3 px-1.5 py-0.5 text-[0.6rem] text-(--text) border border-(--line) font-semibold tracking-[0.06em] uppercase bg-(--bg) rounded-2xl dark:text-(--surface) dark:bg-zinc-100 dark:border-(--grey)'>{product.categorias[0]?.nombre}</span>
          </div>
 
-         <div className='p-4 flex flex-col gap-3 flex-1 bg-(--bg) text-white  border-(--line)'>
+         <div className='p-4 flex flex-col gap-3 flex-1 bg-(--bg) dark:bg-zinc-100 dark:border-(--grey) text-white  border-(--line)'>
             <div className='min-h-12 flex items-start justify-between gap-2'>
-               <h3 className='serif'>{product.nombre}</h3>
+               <h3 className='serif dark:text-(--surface) '>{product.nombre}</h3>
                <p className='serif font-bold text-(--gold)'>{formatARS(product.precio_base)}</p>
             </div>
             <button
-               className='w-full uppercase p-2.5 text-[0.82rem] font-semibold tracking-[0.04em] text-(--text) bg-(--bg) border-2 border-(--line) rounded-sm cursor-pointer transition-[background,transform] duration-200 ease-in-out mt-auto hover:bg-(--gold) hover:text-(--bg) active:scale-[0.98]'
+               className='w-full uppercase p-2.5 text-[0.82rem] font-semibold tracking-[0.04em] text-(--text) bg-(--bg) border-2 border-(--line) rounded-sm cursor-pointer transition-[background,transform] duration-200 ease-in-out mt-auto hover:bg-(--gold) hover:text-(--bg) active:scale-[0.98] dark:bg-(--gold) dark:border-(--gold-deep) dark:text-zinc-100 dark:hover:bg-(--gold) dark:hover:text-(--bg) dark:active:bg-(--gold-deep)'
                onClick={() => onAdd(product)}
             >
                Agregar al carrito

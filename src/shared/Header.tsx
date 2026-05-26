@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useCartStore } from '../features/cart/store/cartStore'
 import { useAuthStore } from '../store/useAuthStore'
 import '../index.css'
+import { ThemeToggle } from './ThemeToggle'
 
 export default function Header() {
    const navigate = useNavigate()
@@ -22,37 +23,38 @@ export default function Header() {
    ]
 
    return (
-      <header className='className="fixed bg-(--bg) top-0 w-full h-(--header-h) flex justify-between items-center px-6 gap-4 border-b border-(--line)'>
+      <header className='className="fixed bg-(--bg) top-0 w-full h-(--header-h) flex justify-between items-center px-6 gap-4 border-b border-(--line) dark:bg-gray-200 dark:border-(--grey) dark:border-none'>
          <div className='flex items-center gap-2'>
             <p className='text-3xl italic text-(--gold) serif'>F</p>
-            <p className='text-3xl text-white serif'>FoodStore</p>
-            <p className='uppercase text-(--text-faint) text-[9px] tracking-[0.32em]'>Tienda Virtual</p>
+            <p className='text-3xl text-white serif dark:text-(--surface-3)'>FoodStore</p>
+            <p className='uppercase text-(--text-faint) text-[9px] tracking-[0.32em] dark:text-(--surface-3)'>Tienda Virtual</p>
          </div>
-         <div className='sans rounded-3xl p-1 border border-(--line) absolute left-1/2 -translate-x-1/2'>
+         <div className='sans rounded-3xl p-1 border border-(--line) absolute left-1/2 -translate-x-1/2 dark:bg-zinc-100 dark:border-(--grey)'>
             {navItems.map(({ label, path }) => (
                <button
                   key={path}
                   onClick={() => navigate(path)}
-                  className={`text-(--text-faint) text-[14px] duration-100 font-bold px-5 py-2 hover:text-white ${pathname === path ? 'text-zinc-950 bg-amber-50 rounded-3xl ' : ''}`}
+                  className={` text-zinc-600 rounded-3xl text-[14px] duration-100 font-bold px-5 py-2 hover:text-white ${pathname === path ? 'text-zinc-950   dark:text-white dark:bg-(--gold) dark:border-2  dark:border-(--gold-deep) bg-amber-50 rounded-3xl ' : ''}`}
                >
                   {label}
                </button>
             ))}
          </div>
          <div className='flex gap-4'>
+            <ThemeToggle />
             <button
                onClick={isAuthenticated ? handleLogout : () => navigate("/login")}
-               className='text-(--text-faint) sans py-2 px-4 border rounded-3xl border-(--line) hover:border-(--gold) hover:text-white hover:bg-(--gold-soft) transition-colors duration-300'
+               className='text-(--text-faint) sans py-2 px-4 border rounded-3xl border-(--line) hover:border-(--gold) hover:text-white hover:bg-(--gold-soft) transition-colors duration-300  dark:bg-zinc-100 dark:border-(--grey) dark:text-zinc-600 dark:hover:border-(--gold-deep) dark:hover:bg-(--gold) dark:border-2'
             >
                {isAuthenticated ? "Cerrar sesión" : "Iniciar sesión"}
             </button>
             <button
                onClick={openCart}
-               className='relative text-(--text-faint) sans py-2 px-4 border rounded-3xl border-(--line) hover:border-(--gold) hover:text-white hover:bg-(--gold-soft) transition-colors duration-300'
+               className='relative text-(--text-faint) sans py-2 px-4 border rounded-3xl border-(--line) hover:border-(--gold) hover:text-white hover:bg-(--gold-soft) transition-colors duration-300  dark:bg-zinc-100 dark:border-2 dark:border-(--gold) dark:text-(--surface) dark:hover:bg-(--gold)'
             >
                Carrito
                {itemCount > 0 && (
-                  <span className='absolute -top-1.5 -right-1.5 min-w-4.5 h-4.5 flex items-center justify-center px-1 text-[10px] font-bold text-(--bg) bg-(--gold) rounded-full leading-none'>
+                  <span className='absolute -top-1.5 -right-1.5 min-w-4.5 h-4.5 flex items-center justify-center px-1 text-[10px] font-bold text-(--bg) bg-(--gold) rounded-full leading-none dark:bg-(--amber)'>
                      {itemCount}
                   </span>
                )}
