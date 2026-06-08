@@ -19,11 +19,20 @@ api.interceptors.request.use(
    },
 );
 
-api.interceptors.response.use((response) => {
-   if (response.data?.data !== undefined) {
-      response.data = response.data.data;
-   }
-   return response;
-});
+api.interceptors.response.use(
+   (response) => {
+      if (response.data?.data !== undefined) {
+         response.data = response.data.data;
+      }
+      return response;
+   },
+   (error: AxiosError) => {
+      const isAuthRoute = error.config?.url?.includes("/auth/");
+      if (error.response?.status === 401 && !isAuthRoute) {
+         window.dispatchEvent(new CustomEvent("auth:unauthorized"));
+      }
+      return Promise.reject(error);
+   },
+);
 
 export default api;
