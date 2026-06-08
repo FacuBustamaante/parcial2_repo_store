@@ -26,7 +26,7 @@ export function LoginPage() {
 
   return (
     <div className="min-h-screen bg-(--bg) flex items-center justify-center px-4 pt-(--header-h)">
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-sm" style={{ animation: "var(--animate-fade-in-up)" }}>
         <div className="mb-8">
           <p className="uppercase text-(--text-faint) text-[9px] tracking-[0.32em] sans mb-3">
             Tienda · Acceso

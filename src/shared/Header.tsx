@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useCartStore } from '../features/cart/store/cartStore'
 import { useAuthStore } from '../store/useAuthStore'
 import '../index.css'
 import { ThemeToggle } from './ThemeToggle'
+import LogoutModal from './LogoutModal'
 
 export default function Header() {
    const navigate = useNavigate()
@@ -11,8 +13,10 @@ export default function Header() {
    const openCart = useCartStore((s) => s.openCart)
    const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
    const logout = useAuthStore((s) => s.logout);
+   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-   const handleLogout = () => {
+   const handleLogoutConfirm = () => {
+      setShowLogoutModal(false);
       logout();
       navigate("/store");
    }
@@ -23,6 +27,7 @@ export default function Header() {
    ]
 
    return (
+      <>
       <header className='className="fixed bg-(--bg) top-0 w-full h-(--header-h) flex justify-between items-center px-6 gap-4 border-b border-(--line) dark:bg-gray-200 dark:border-(--grey) dark:border-none'>
          <div className='flex items-center gap-2'>
             <p className='text-3xl italic text-(--gold) serif'>F</p>
@@ -43,7 +48,7 @@ export default function Header() {
          <div className='flex gap-4'>
             <ThemeToggle />
             <button
-               onClick={isAuthenticated ? handleLogout : () => navigate("/login")}
+               onClick={isAuthenticated ? () => setShowLogoutModal(true) : () => navigate("/login", { viewTransition: true })}
                className='text-(--text-faint) sans py-2 px-4 border rounded-3xl border-(--line) hover:border-(--gold) hover:text-white hover:bg-(--gold-soft) transition-colors duration-300  dark:bg-zinc-100 dark:border-(--grey) dark:text-zinc-600 dark:hover:border-(--gold-deep) dark:hover:bg-(--gold) dark:border-2'
             >
                {isAuthenticated ? "Cerrar sesión" : "Iniciar sesión"}
@@ -61,5 +66,13 @@ export default function Header() {
             </button>
          </div>
       </header>
+
+      {showLogoutModal && (
+         <LogoutModal
+            onConfirm={handleLogoutConfirm}
+            onCancel={() => setShowLogoutModal(false)}
+         />
+      )}
+      </>
    )
 }

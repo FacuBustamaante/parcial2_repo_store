@@ -242,3 +242,21 @@ body{
    gap: 40px;
    align-items: start;
 }
+
+/* ── View Transitions (Chrome/Edge) ── */
+@supports (view-transition-name: none) {
+   ::view-transition-old(root) {
+      animation: pageExitUp 0.2s ease both;
+   }
+
+   ::view-transition-new(root) {
+      animation: fadeInUp 0.35s ease both;
+   }
+}
+
+@keyframes pageExitUp {
+   to {
+      opacity: 0;
+      transform: translateY(-10px);
+   }
+}
