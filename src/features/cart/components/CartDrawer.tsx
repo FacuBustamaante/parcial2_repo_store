@@ -54,11 +54,13 @@ export function CartDrawer() {
         onSuccess: (order) => {
           clear();
           closeCart();
-          if (formaPago === "TRANSFERENCIA") {
+          
+          if (formaPago === "TRANSFERENCIA" || formaPago === "TARJETA") {
             navigate(`/payment/${order.id}`);
           } else {
             navigate("/orders");
           }
+           
         },
         onError: (error) => {
           console.error("Error al crear pedido:", error);

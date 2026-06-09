@@ -1,15 +1,30 @@
+import { useState } from "react";
 import { ArrowIcon } from "../../../shared/Icons";
 import '../../../index.css'
 import { formatARS } from "../../../shared/formatARS";
 import type { ProductCardProps } from "../types";
 
 export function ProductCard({ product, onAdd, onOpen, addedFlash }: ProductCardProps) {
+   const [imgIndex, setImgIndex] = useState(0);
+   const images = product.imagenes_url;
+   const hasMultiple = images.length > 1;
+
+   const prev = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      setImgIndex(i => (i - 1 + images.length) % images.length);
+   };
+
+   const next = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      setImgIndex(i => (i + 1) % images.length);
+   };
+
    return (
       <article className={`card dark:rounded-lg border-2 dark:border-zinc-100 border-(--surface) ${addedFlash ? 'flash' : ""}`}>
-         <div className='relative h-80 overflow-hidden '>
+         <div className='relative h-80 overflow-hidden'>
             <img
-               src={product.imagenes_url[0]}
-               alt={product.nombre}
+               src={images[imgIndex]}
+               alt={`${product.nombre} ${imgIndex + 1}`}
                className='w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105'
             />
             <div className='veil' aria-hidden="true" />
@@ -22,7 +37,36 @@ export function ProductCard({ product, onAdd, onOpen, addedFlash }: ProductCardP
                   Ver detalle <ArrowIcon size={12} />
                </button>
             </div>
-            <span className='absolute top-3 left-3 px-1.5 py-0.5 text-[0.6rem] text-(--text) border border-(--line) font-semibold tracking-[0.06em] uppercase bg-(--bg) rounded-2xl dark:text-(--surface) dark:bg-zinc-100 dark:border-(--grey)'>{product.categorias[0]?.nombre}</span>
+            <span className='absolute top-3 left-3 px-1.5 py-0.5 text-[0.6rem] text-(--text) border border-(--line) font-semibold tracking-[0.06em] uppercase bg-(--bg) rounded-2xl dark:text-(--surface) dark:bg-zinc-100 dark:border-(--grey) z-20'>{product.categorias[0]?.nombre}</span>
+
+            {hasMultiple && (
+               <>
+                  <button
+                     onClick={prev}
+                     className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/65 text-white rounded-full w-7 h-7 flex items-center justify-center text-lg leading-none transition-colors cursor-pointer"
+                     aria-label="Imagen anterior"
+                  >
+                     ‹
+                  </button>
+                  <button
+                     onClick={next}
+                     className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/65 text-white rounded-full w-7 h-7 flex items-center justify-center text-lg leading-none transition-colors cursor-pointer"
+                     aria-label="Siguiente imagen"
+                  >
+                     ›
+                  </button>
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
+                     {images.map((_, i) => (
+                        <button
+                           key={i}
+                           onClick={(e) => { e.stopPropagation(); setImgIndex(i); }}
+                           className={`rounded-full transition-all duration-200 cursor-pointer ${i === imgIndex ? 'w-2.5 h-2.5 bg-white' : 'w-2 h-2 bg-white/50 hover:bg-white/75'}`}
+                           aria-label={`Ir a imagen ${i + 1}`}
+                        />
+                     ))}
+                  </div>
+               </>
+            )}
          </div>
 
          <div className='p-4 flex flex-col gap-3 flex-1 bg-(--bg) dark:bg-zinc-100 dark:border-(--grey) text-white  border-(--line)'>
