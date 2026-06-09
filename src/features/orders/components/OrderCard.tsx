@@ -45,19 +45,21 @@ const OrderCard = ({ orders, user, loading, error }: OrderCardProps) => {
             const isOpen = expandedId === order.id;
 
             return (
-               <div key={order.id} className="bg-(--surface) border border-(--line) rounded-xl overflow-hidden">
+               <div key={order.id} className="bg-(--surface) border border-(--line) rounded-xl overflow-hidden dark:bg-zinc-100 dark:border-zinc-300">
                   <button
                      onClick={() => setExpandedId(isOpen ? null : order.id)}
                      className="w-full flex items-center justify-between px-6 py-4 text-left cursor-pointer hover:bg-white/2 transition-colors duration-150"
                   >
                      <div className="flex items-center gap-4">
-                        <span className="serif text-white text-lg">#{order.id}</span>
+                        <span className="serif text-white text-lg dark:text-(--surface)">#{order.id}</span>
                         <span className={`status-badge status-${order.estado_codigo}`}>
                            {order.estado_codigo}
                         </span>
                      </div>
                      <div className="flex items-center gap-6">
-                        <span className="serif text-(--gold) text-lg">{formatARS(Number(order.total))}</span>
+                        <span className="serif text-(--gold) text-lg dark:text-(--surface)">
+                           {formatARS(Number(order.total))}
+                        </span>
                         <svg
                            className={`w-4 h-4 text-(--text-faint) transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
@@ -68,47 +70,57 @@ const OrderCard = ({ orders, user, loading, error }: OrderCardProps) => {
                   </button>
 
                   {isOpen && (
-                     <div className="border-t border-(--line) px-6 py-5 flex flex-col gap-4">
+                     <div className="border-t border-(--line) px-6 py-5 flex flex-col gap-4 dark:border-zinc-300">
                         {user && (
-                           <p className="text-sm sans text-(--text-faint)">
-                              Cliente: <span className="text-(--text)">{user.apellido}, {user.nombre}</span>
+                           <p className="text-sm sans text-(--text-faint) dark:text-(--surface) dark:font-bold">
+                              Cliente: <span className="text-(--text) dark:text-(--surface) dark:font-light">
+                                 {user.apellido}, {user.nombre}
+                              </span>
                            </p>
                         )}
                         {order.notas && (
-                           <p className="text-sm sans text-(--text-faint)">
-                              Notas: <span className="text-(--text)">{order.notas}</span>
+                           <p className="text-sm sans text-(--text-faint) dark:text-(--surface) dark:font-bold">
+                              Notas: <span className="text-(--text) dark:text-(--surface) dark:font-light">
+                                 {order.notas}
+                              </span>
                            </p>
                         )}
-                        <div className="border-t border-(--line) pt-4">
+                        <div className="border-t border-(--line) pt-4 dark:border-zinc-300">
                            {order.detalles.map(item => (
-                              <div key={item.producto_id} className="flex justify-between text-sm sans text-(--text) mt-3">
+                              <div key={item.producto_id} className="flex justify-between text-sm sans text-(--text) mt-3 dark:text-(--surface)">
                                  <span>{item.nombre_snapshot} x{item.cantidad}</span>
                                  <span>{formatARS(Number(item.precio_snapshot) * item.cantidad)}</span>
                               </div>
                            ))}
                         </div>
-                        <div className="flex flex-col gap-2 border-t border-(--line) pt-4">
-                           <div className="flex justify-between text-sm sans text-(--text-faint)">
+                        <div className="flex flex-col gap-2 border-t border-(--line) pt-4 dark:border-zinc-300">
+                           <div className="flex justify-between text-sm sans text-(--text-faint) dark:text-(--surface) dark:font-bold">
                               <span>Subtotal</span>
-                              <span className="text-(--text)">{formatARS(Number(order.subtotal))}</span>
+                              <span className="text-(--text) dark:text-(--surface)">
+                                 {formatARS(Number(order.subtotal))}
+                              </span>
                            </div>
                            {Number(order.descuento) > 0 && (
-                              <div className="flex justify-between text-sm sans text-(--text-faint)">
+                              <div className="flex justify-between text-sm sans text-(--text-faint) dark:text-(--surface) dark:font-bold">
                                  <span>Descuento</span>
                                  <span className="text-emerald-400">−{formatARS(Number(order.descuento))}</span>
                               </div>
                            )}
-                           <div className="flex justify-between text-sm sans text-(--text-faint)">
+                           <div className="flex justify-between text-sm sans text-(--text-faint) dark:text-(--surface) dark:font-bold">
                               <span>Envío</span>
-                              <span className="text-(--text)">{formatARS(Number(order.costo_envio))}</span>
+                              <span className="text-(--text) dark:text-(--surface)">
+                                 {formatARS(Number(order.costo_envio))}
+                              </span>
                            </div>
                            <div className="flex justify-between items-center border-t border-(--line) pt-3 mt-1">
-                              <span className="text-(--text-faint) sans text-xs uppercase tracking-widest">Total</span>
+                              <span className="text-(--text-faint) sans text-xs uppercase tracking-widest dark:text-(--surface) dark:font-bold">Total</span>
                               <div className="flex items-center justify-items-center gap-5">
                                  <span className={`pago-badge pago-${order.forma_pago_codigo}`}>
                                     {order.forma_pago_codigo}
                                  </span>
-                                 <span className="serif text-(--gold) text-2xl font-bold">{formatARS(Number(order.total))}</span>
+                                 <span className="serif text-(--gold) text-2xl font-bold dark:text-(--surface)">
+                                    {formatARS(Number(order.total))}
+                                 </span>
                               </div>
                            </div>
                         </div>

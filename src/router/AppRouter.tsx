@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Orders from "../features/orders/pages/Orders";
 import ShoppingList from "../features/products/pages/ShoppingList";
 import { CartDrawer } from "../features/cart/components/CartDrawer";
@@ -9,6 +9,23 @@ import { RegisterPage } from "../features/auth/pages/RegisterPage";
 import { useAuthStore } from "../store/useAuthStore";
 import PaymentPage from "../features/cart/pages/PaymentPage";
 import SuccessPage from "../features/cart/components/SuccessPage";
+import NotFound from "../shared/pages/NotFound";
+
+const SessionWatcher = () => {
+   const clearSession = useAuthStore((s) => s.clearSession);
+   const navigate = useNavigate();
+
+   useEffect(() => {
+      const handleUnauthorized = () => {
+         clearSession();
+         navigate("/login", { replace: true });
+      };
+      window.addEventListener("auth:unauthorized", handleUnauthorized);
+      return () => window.removeEventListener("auth:unauthorized", handleUnauthorized);
+   }, [clearSession, navigate]);
+
+   return null;
+};
 
 const AppRouter = () => {
    const checkAuth = useAuthStore((s) => s.checkAuth);
@@ -19,6 +36,7 @@ const AppRouter = () => {
 
    return (
       <BrowserRouter>
+         <SessionWatcher />
          <Header />
          <CartDrawer />
          <main>
@@ -30,7 +48,7 @@ const AppRouter = () => {
                <Route path="/register" element={<RegisterPage />} />
                <Route path="/payment/:orderId" element={<PaymentPage />} />
                <Route path="/orders/:id/success" element={<SuccessPage />} />
-
+               <Route path="*" element={<NotFound />} />
             </Routes>
          </main>
       </BrowserRouter>

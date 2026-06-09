@@ -5,15 +5,15 @@ const Orders = () => {
    const { orders, user, loading, error } = useOrders();
 
    return (
-      <div className="bg-(--bg) min-h-screen">
+      <div className="bg-(--bg) dark:bg-zinc-100 min-h-screen">
          <div className="max-w-3xl mx-auto px-6 py-10">
-            <div className="flex items-end justify-between mb-6 pb-6 border-b border-(--line)">
+            <div className="flex items-end justify-between mb-6 pb-6 border-b border-(--line) dark:border-zinc-300">
                <div>
-                  <p className="uppercase text-(--text-faint) text-[9px] tracking-[0.32em] mb-2">historial</p>
-                  <h1 className="serif text-white text-4xl">Tus Pedidos</h1>
+                  <p className="uppercase text-(--text-faint) text-[9px] tracking-[0.32em] mb-2 dark:text-(--surface)">historial</p>
+                  <h1 className="serif text-white text-4xl dark:text-(--surface)">Tus Pedidos</h1>
                </div>
             </div>
-            <p className="text-(--text-faint) sans text-sm mb-8">
+            <p className="text-(--text-faint) sans text-sm mb-8 dark:text-(--surface)">
                Seguimiento detallado de cada orden. Hacé clic para expandir.
             </p>
             <OrderCard orders={orders} user={user} loading={loading} error={error} />
