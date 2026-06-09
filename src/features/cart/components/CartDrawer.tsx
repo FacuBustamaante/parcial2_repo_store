@@ -43,29 +43,31 @@ export function CartDrawer() {
          personalizacion,
       }));
 
-      createOrder(
-         {
-            direccion_id: efectivaDireccionId as number,
-            forma_pago_codigo: formaPago,
-            notas,
-            detalles,
-         },
-         {
-            onSuccess: (order) => {
-               clear();
-               closeCart();
-               if (formaPago === "TRANSFERENCIA") {
-                  navigate(`/payment/${order.id}`);
-               } else {
-                  navigate("/orders");
-               }
-            },
-            onError: (error) => {
-               console.error("Error al crear pedido:", error);
-            },
-         },
-      );
-   };
+    createOrder(
+      {
+        direccion_id: efectivaDireccionId as number,
+        forma_pago_codigo: formaPago,
+        notas,
+        detalles,
+      },
+      {
+        onSuccess: (order) => {
+          clear();
+          closeCart();
+          
+          if (formaPago === "TRANSFERENCIA" || formaPago === "TARJETA") {
+            navigate(`/payment/${order.id}`);
+          } else {
+            navigate("/orders");
+          }
+           
+        },
+        onError: (error) => {
+          console.error("Error al crear pedido:", error);
+        },
+      },
+    );
+  };
 
    useEffect(() => {
       const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeCart();
