@@ -22,9 +22,9 @@ export function ProductDetailModal({ product, onClose, onAdd }: ProductDetailMod
    const dec = () => setQty((q) => Math.max(1, q - 1));
 
    return (
-      <div className='fixed backdrop-blur-sm inset-0 z-100 flex items-center justify-center p-6 animate-fade-in-up'>
+      <div className='fixed backdrop-blur-sm inset-0 z-100 flex items-center justify-center p-3 sm:p-6 animate-fade-in-up'>
          <div className='absolute inset-0 bg-[rgba(20,15,10,0.65)] backdrop-blur-sm' onClick={onClose} />
-         <div className='relative z-1 w-full max-w-215 max-h-[90vh] overflow-y-auto bg-(--bg) dark:bg-zinc-100  rounded-2xl p-8' role="dialog" aria-modal="true" aria-label={product.nombre}>
+         <div className='relative z-1 w-full max-w-215 max-h-[90vh] overflow-y-auto bg-(--bg) dark:bg-zinc-100 rounded-2xl p-4 sm:p-8' role="dialog" aria-modal="true" aria-label={product.nombre}>
             <button className='inline-flex items-center sans gap-2 mb-6 p-0 text-[0.82rem] font-semibold tracking-[0.04em] text-[#8a7a60] bg-none border-none uppercase cursor-pointer transition-colors duration-200 hover:text-(--gold)' onClick={onClose}>
                <ArrowIcon dir="left" size={14} /> Volver a la lista
             </button>
@@ -55,7 +55,7 @@ export function ProductDetailModal({ product, onClose, onAdd }: ProductDetailMod
                      </div>
                   </dl>
 
-                  <div className='flex items-center gap-4'>
+                  <div className='flex flex-wrap items-center gap-3'>
                      <div className='flex text-(--text) items-center gap-3 px-3.5 py-2.5 bg-(--bg) border-2 border-(--line) rounded-lg shrink-0'>
                         <button onClick={dec} aria-label="Disminuir cantidad">
                            <MinusIcon size={14} />

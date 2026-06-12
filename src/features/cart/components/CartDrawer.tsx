@@ -97,7 +97,7 @@ export function CartDrawer() {
             role="dialog"
             aria-modal="true"
             aria-label="Carrito de compras"
-            className={`fixed right-0 top-0 h-full w-105 bg-(--bg) border-l border-(--line) z-50 flex flex-col transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+            className={`fixed right-0 top-0 h-full w-full sm:w-105 bg-(--bg) border-l border-(--line) z-50 flex flex-col transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}
          >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-(--line) shrink-0">

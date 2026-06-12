@@ -260,3 +260,20 @@ body{
       transform: translateY(-10px);
    }
 }
+
+/* ── Responsive (mobile) ── */
+@media (max-width: 767px) {
+   .grid-detail {
+      grid-template-columns: 1fr;
+      gap: 24px;
+   }
+
+   .media-detail {
+      aspect-ratio: 4/3;
+   }
+
+   .grid {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+   }
+}

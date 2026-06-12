@@ -66,7 +66,7 @@ export function RegisterPage() {
                )}
 
                {/* NOMBRE + APELLIDO */}
-               <div className="grid grid-cols-2 gap-4">
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-2">
                      <label htmlFor="nombre" className={labelClass}>Nombre</label>
                      <input
@@ -129,7 +129,7 @@ export function RegisterPage() {
                </div>
 
                {/* CONTRASEÑA + CONFIRMAR */}
-               <div className="grid grid-cols-2 gap-4">
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-2">
                      <label htmlFor="password" className={labelClass}>Contraseña</label>
                      <input

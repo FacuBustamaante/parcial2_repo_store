@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Read(//c/Users/User/.claude/projects/c--Users-User-Documents-Facultad-Parcial2-frontend-parcial2-repo-store/memory/**)"
-    ]
-  }
-}

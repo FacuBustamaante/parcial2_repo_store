@@ -48,7 +48,7 @@ export function ProductsSection({ onAdd, flashIds }: ProductsSectionProps) {
                />
             </div>
             {/* Filter pills */}
-            <div className='flex items-center gap-4 mb-6'>
+            <div className='flex flex-wrap items-center gap-2 md:gap-4 mb-6'>
                {["Todos", ...categories.map((c) => c.nombre)].map((cat) => (
                   <button
                      key={cat}
