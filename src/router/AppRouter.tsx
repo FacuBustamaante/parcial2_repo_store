@@ -39,7 +39,7 @@ const AppRouter = () => {
          <SessionWatcher />
          <Header />
          <CartDrawer />
-         <main>
+         <main className="pt-(--header-h)">
             <Routes>
                <Route path="/" element={<ShoppingList />} />
                <Route path="/store" element={<ShoppingList />} />

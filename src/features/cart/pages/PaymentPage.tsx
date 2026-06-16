@@ -13,7 +13,7 @@ export default function PaymentPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-[calc(100vh-var(--header-h))] bg-gray-50 flex items-center justify-center">
         <p className="text-gray-500">Cargando pedido...</p>
       </div>
     );
@@ -21,7 +21,7 @@ export default function PaymentPage() {
 
   if (error || !order) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center text-center px-4">
+      <div className="min-h-[calc(100vh-var(--header-h))] bg-gray-50 flex flex-col items-center justify-center text-center px-4">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
           Pedido no encontrado
         </h1>
@@ -41,7 +41,7 @@ export default function PaymentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-[calc(100vh-var(--header-h))] bg-gray-50">
       <main className="max-w-2xl mx-auto px-4 py-8">
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">

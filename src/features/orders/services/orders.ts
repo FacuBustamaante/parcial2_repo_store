@@ -24,13 +24,13 @@ export const createOrder = async (order: OrderCreate): Promise<OrderResponse> =>
    return data;
 }
 
-export const getUser = async () : Promise<Usuario> => {
+export const getUser = async (): Promise<Usuario> => {
    const { data } = await api.get(`/api/v1/auth/me`);
    return data;
 }
 
 
 export const getOrderById = async (id: number) => {
-  const { data } = await api.get(`/api/v1/pedidos/${id}`);
-  return data;
+   const { data } = await api.get(`/api/v1/pedidos/${id}`);
+   return data;
 };
